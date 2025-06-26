@@ -29,9 +29,15 @@ const deleteUser = (idUser) => {
     return dbPool.execute(SQLQuery, values);
 }
 
+const getUserByEmail = (email) => {
+    const SQLQuery = 'SELECT * FROM users WHERE email = ?';
+    return dbPool.execute(SQLQuery, [email]);
+}
+
 module.exports = {
     getAllUsers,
     createUsers,
     updateUsers,
     deleteUser,
+    getUserByEmail,
 }
