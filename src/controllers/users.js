@@ -1,7 +1,7 @@
 const userModel = require("../models/users");
 const bcrypt = require("bcrypt");
 
-// LOGIN
+// CREATE - POST
 const createUsers = async (req, res) => {
     const body = req.body;
     try {
@@ -46,25 +46,6 @@ const getAllUsers = async (req, res) => {
         })
     }
 }
-
-
-// CREATE - POST
-// const createUsers = async (req, res) => {
-//     const body = req.body;
-//     try {
-//         await userModel.createUsers(body);
-//         res.status(201).json({
-//             message: "Create users success",
-//             data: body
-//         })
-//     } catch (e) {
-//         console.error('Error creating user:', e);
-//         res.status(500).json({
-//             message: "Server error",
-//             messageerror: "Something went wrong on the server while creating user."
-//         })
-//     }
-// }
 
 // UPDATE - PATCH
 const updateUsers = async (req, res) => {
