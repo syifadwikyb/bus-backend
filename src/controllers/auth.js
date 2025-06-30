@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
         res.status(200).json({
             message: 'Login successfull',
             data: {
-                id: user.id_user,
+                id: user.id,
                 name: user.name,
                 email: user.email,
             }
@@ -40,6 +40,13 @@ const loginUser = async (req, res) => {
 
 const register = async (req, res) => {
     const {name, email, password, address} = req.body;
+
+    const isValidEmail = (email) =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    if (!isValidEmail(email)) {
+        return res.status(400).json({ message: "Invalid email format" });
+    }
 
     if (!name || !email || !password || !address) {
         return res.status(400).json({
@@ -64,7 +71,7 @@ const register = async (req, res) => {
             password: hashedPassword
         })
 
-        res.status(200).json({
+        res.status(201).json({
             message: 'Register Success',
         })
 
