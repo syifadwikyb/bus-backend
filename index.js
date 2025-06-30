@@ -1,5 +1,5 @@
 require('dotenv').config();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 const express = require('express');
 const userRoutes = require('./src/routes/users');
 const middlewareLogRequest = require("./src/middleware/logs");
@@ -9,7 +9,7 @@ const app = express();
 
 app.use(middlewareLogRequest);
 app.use(express.json())
-app.use("/users", userRoutes);
+// app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 
 app.listen(PORT, () => {

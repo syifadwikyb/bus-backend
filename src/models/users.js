@@ -1,43 +1,56 @@
-const dbPool = require("../config/database");
+const supabase = require("../config/supabaseClient");
 
-const getAllUsers = () => {
-    const SQLQuery = 'SELECT * FROM users';
-    return dbPool.execute(SQLQuery);
+// const getAllUsers = async () => {
+//     const { error, data } = await supabase
+//         .from ('users')
+//         .select('*')
+//
+//     if (error) throw error;
+//     return data;
+// }
+//
+const createUsers = async (body) => {
+    const {error, data} = await supabase
+        .from ('users')
+        .insert([body])
+
+    if (error) throw error;
+    return data;
 }
 
-const createUsers = (body) => {
-    const SQLQuery = `INSERT INTO users (name, email, address, password) VALUES (?, ?, ?, ?)`;
-    const values = [body.name, body.email, body.address, body.password];
-    return dbPool.execute(SQLQuery, values);
-}
+// const updateUsers = async (body, idUser) => {
+//     const {error, data} = await supabase
+//         .from('users')
+//         .update(body)
+//         .eq('id_user', idUser);
+//
+//     if (error) throw error;
+//     return data;
+// }
 
+// const deleteUser = async (idUser) => {
+//     const { error, data } = await supabase
+//         .from('users')
+//         .delete()
+//         .eq('id_user', idUser);
+//
+//     if (error) throw error;
+//     return data;
+// };
 
-const updateUsers = (body, idUser) => {
-    const SQLQuery = `UPDATE users SET name = ?, email = ?, address = ? WHERE id_user = ?`;
-    const values = [
-        body.name ?? null,
-        body.email ?? null,
-        body.address ?? null,
-        idUser
-    ];
-    return dbPool.execute(SQLQuery, values);
-}
-
-const deleteUser = (idUser) => {
-    const SQLQuery = `DELETE FROM users WHERE id_user = ?`;
-    const values = [idUser];
-    return dbPool.execute(SQLQuery, values);
-}
-
-const getUserByEmail = (email) => {
-    const SQLQuery = 'SELECT * FROM users WHERE email = ?';
-    return dbPool.execute(SQLQuery, [email]);
-}
+const getUserByEmail = async (email) => {
+    const { error, data } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', email);
+    if (error) throw error;
+    return data;
+};
 
 module.exports = {
-    getAllUsers,
+    // getAllUsers,
     createUsers,
-    updateUsers,
-    deleteUser,
+    // updateUsers,
+    // deleteUser,
     getUserByEmail,
 }
